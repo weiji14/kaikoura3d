@@ -1,65 +1,65 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Kaikoura3d by weiji14</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Kaikoura3d</h1>
-      <h2 class="project-tagline">3D visualization of New Zealand&#39;s Kaikoura coast using Qgis2threejs and Landsat8 data</h2>
-      <a href="https://github.com/weiji14/kaikoura3d" class="btn">View on GitHub</a>
-      <a href="https://github.com/weiji14/kaikoura3d/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/weiji14/kaikoura3d/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>kaikoura3d</title>
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./Qgis2threejs.css">
+</head>
+<body>
+<div id="webgl"></div>
 
-    <section class="main-content">
-      <h1>
-<a id="kaikoura3d" class="anchor" href="#kaikoura3d" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>kaikoura3d</h1>
+<!-- popup -->
+<div id="popup" style="display:none;">
+<div id="closebtn">&times;</div>
+<div id="popupbar"></div>
+<div id="popupbody">
+ <div id="popupcontent"></div>
+ <div id="pageinfo">
+  <h1>Current View URL</h1>
+  <div><input id="urlbox" type="text"></div>
 
-<p>3D visualization of New Zealand's Kaikoura coast using Qgis2threejs and Landsat8 data</p>
+  <h1>Usage</h1>
+  <div id="usage"></div>
 
-<p><img src="kaikoura_flatmap.jpg"></p>
+  <h1>About</h1>
+  <div id="about">This page was made with <a href="http://www.qgis.org/" target="_blank">QGIS</a> and <a href="https://github.com/minorua/Qgis2threejs" target="_blank">Qgis2threejs</a> plugin, 
+and uses the following library:
+  <ul>
+  <li>three.js <a href="http://threejs.org/" target="_blank">http://threejs.org/</a> <a href="./threejs/LICENSE" target="_blank" class="license">(LICENSE)</a></li>
+  <li id="lib_proj4js" style="display: none;">Proj4js <a href="http://trac.osgeo.org/proj4js/" target="_blank">http://trac.osgeo.org/proj4js/</a> <a href="./proj4js/LICENSE.md" target="_blank" class="license">(LICENSE)</a></li>
+  </ul>
+  </div>
+ </div>
+</div></div>
 
-<p>Landsat 8 raw data source:</p>
+<!-- footer -->
+<div id="footer"><div id="infobtn">i</div></div>
 
-<ul>
-<li>Earth Explorer @ <a href="https://earthexplorer.usgs.gov/order/process?dataset_name=LANDSAT_8&amp;ordered=LC80730902016286LGN00">https://earthexplorer.usgs.gov/order/process?dataset_name=LANDSAT_8&amp;ordered=LC80730902016286LGN00</a> (requires registration)</li>
-<li>Amazon Web Services @ <a href="https://landsatonaws.com/L8/073/090/LC80730902016286LGN00">https://landsatonaws.com/L8/073/090/LC80730902016286LGN00</a> (no registration required)</li>
-<li>*Special mention to RemotePixel! <a href="https://remotepixel.ca/projects/index.html">https://remotepixel.ca/projects/index.html</a> (very nice place to visualize and download Landsat8/Sentinel2 satellite data)</li>
-</ul>
+<script src="./threejs/three.min.js"></script>
+<script src="./Qgis2threejs.js"></script>
+<script src="./threejs/OrbitControls.js"></script>
+<script>
+var option = Q3D.Options;
 
-<p>New Zealand 8m Digital Elevation Model</p>
+</script>
+<script src="./kaikoura3d.js"></script>
+<script>
+if (typeof proj4 !== "undefined") document.getElementById("lib_proj4js").style.display = "list-item";
 
-<ul>
-<li>LINZ Data Service (provides elevation to our pixels) @ <a href="https://data.linz.govt.nz/layer/1768-nz-8m-digital-elevation-model-2012/">https://data.linz.govt.nz/layer/1768-nz-8m-digital-elevation-model-2012/</a>
-</li>
-</ul>
+var container = document.getElementById("webgl");
+var app = Q3D.application;
+app.init(container);
 
-<p>Geographic Information System (GIS) tools</p>
+// load the project
+app.loadProject(project);
 
-<ul>
-<li>QGIS 2.14 Essen Long term release (Desktop GIS platform) @ <a href="http://qgis.org">http://qgis.org</a>
-</li>
-<li>Semi-Automatic Classification Plugin for QGIS (for Landsat processing) @ <a href="https://fromgistors.blogspot.com/p/semi-automatic-classification-plugin.html">https://fromgistors.blogspot.com/p/semi-automatic-classification-plugin.html</a>
-</li>
-<li>Qgis2threejs Plugin for QGIS (for 3D html/javascript visualization) @ <a href="https://plugins.qgis.org/plugins/Qgis2threejs/">https://plugins.qgis.org/plugins/Qgis2threejs/</a>
-</li>
-</ul>
+document.getElementById("infobtn").onclick = app.showInfo.bind(app);
+if ("hidebutton" in app.urlParams) document.getElementById("infobtn").style.display = "none";
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/weiji14/kaikoura3d">Kaikoura3d</a> is maintained by <a href="https://github.com/weiji14">weiji14</a>.</span>
+app.addEventListeners();
+app.start();
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
-  </body>
+</script>
+</body>
 </html>
