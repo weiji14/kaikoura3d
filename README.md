@@ -1,5 +1,5 @@
 # kaikoura3d
-3D visualization of New Zealand's Kaikoura coast using Qgis2threejs and Landsat8 data
+3D visualization of New Zealand's Kaikoura coast using Qgis2threejs and Landsat 8 data. Demo [here](https://weiji14.github.io/kaikoura3d/)
 
 <img src="kaikoura_flatmap.jpg">
 
