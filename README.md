@@ -1,6 +1,8 @@
 # kaikoura3d
 3D visualization of New Zealand's Kaikoura coast using Qgis2threejs and Landsat8 data
 
+<img src="kaikoura_flatmap.jpg">
+
 Landsat 8 raw data source:
 - Earth Explorer @ https://earthexplorer.usgs.gov/order/process?dataset_name=LANDSAT_8&ordered=LC80730902016286LGN00 (requires registration)
 - Amazon Web Services @ https://landsatonaws.com/L8/073/090/LC80730902016286LGN00 (no registration required)
